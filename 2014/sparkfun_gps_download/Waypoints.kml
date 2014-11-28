@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"  xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2"    
+     xmlns:atom="http://www.w3.org/2005/Atom">
+    <Document>
+        <name>Converted from GPX file</name>
+        
+                                <atom:link href="http://www.garmin.com"/>
+            
+                            <TimeStamp>
+                <when>2013-03-13T00:03:43Z</when>
+            </TimeStamp> 
+            
+                
+        <description><![CDATA[<br/><p> </p><p><br/>Converted using <b><a href='http://gpx2kml.com' title='Go to gpx2kml.com'>gpx2kml.com</a></b></p><br/>]]></description>
+        <visibility>1</visibility>
+        <open>1</open>
+        
+                <Style id="red">
+            <LineStyle>
+            <color>C81400FF</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        <Style id="route_red">
+            <LineStyle>
+            <color>961400FF</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+                <Style id="green">
+            <LineStyle>
+            <color>C878FF00</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        <Style id="route_green">
+            <LineStyle>
+            <color>9678FF00</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+                <Style id="blue">
+            <LineStyle>
+            <color>C8FF7800</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        <Style id="route_blue">
+            <LineStyle>
+            <color>96FF7800</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+                <Style id="cyan">
+            <LineStyle>
+            <color>C8F0FF14</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        <Style id="route_cyan">
+            <LineStyle>
+            <color>96F0FF14</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+                <Style id="orange">
+            <LineStyle>
+            <color>C81478FF</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        <Style id="route_orange">
+            <LineStyle>
+            <color>961478FF</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+                <Style id="dark_green">
+            <LineStyle>
+            <color>C8008C14</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        <Style id="route_dark_green">
+            <LineStyle>
+            <color>96008C14</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+                <Style id="purple">
+            <LineStyle>
+            <color>C8FF7878</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        <Style id="route_purple">
+            <LineStyle>
+            <color>96FF7878</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+                <Style id="pink">
+            <LineStyle>
+            <color>C8A078F0</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        <Style id="route_pink">
+            <LineStyle>
+            <color>96A078F0</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+                <Style id="brown">
+            <LineStyle>
+            <color>C8143C96</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        <Style id="route_brown">
+            <LineStyle>
+            <color>96143C96</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+                <Style id="dark_blue">
+            <LineStyle>
+            <color>C8F01414</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        <Style id="route_dark_blue">
+            <LineStyle>
+            <color>96F01414</color>
+            <width>4</width>
+            </LineStyle>
+        </Style>
+        
+                
+        <Folder>
+            <name>Waypoints</name>
+            <description>A list of waypoints</description>
+            <visibility>1</visibility>
+            <open>0</open>
+                                                                                
+            
+            <Placemark>
+                <name>1st corner</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T20:49:45Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.23002602159977</longitude>
+                    <latitude>40.071258964017034</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.23002602159977,40.071258964017034,1583.5760499999999                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>2nd corner</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T20:50:25Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.22971798665822</longitude>
+                    <latitude>40.07075596600771</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.22971798665822,40.07075596600771,1584.1811520000001                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>3rd corner</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T20:51:08Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.22919101640582</longitude>
+                    <latitude>40.070976996794343</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.22919101640582,40.070976996794343,1581.6641850000001                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>4th corner</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T20:51:46Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.22946602664888</longitude>
+                    <latitude>40.071331970393658</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.22946602664888,40.071331970393658,1581.5112300000001                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>barrel 1</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T19:54:57Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.22996600717306</longitude>
+                    <latitude>40.071039022877812</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.22996600717306,40.071039022877812,1575.535889                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>barrel 2</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T19:55:06Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.22995703853667</longitude>
+                    <latitude>40.070982025936246</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.22995703853667,40.070982025936246,1573.712524                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>barrel 3</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T19:55:16Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.2299000415951</longitude>
+                    <latitude>40.070900972932577</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.2299000415951,40.070900972932577,1575.7304690000001                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>barrel 4</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T19:55:26Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.22986902855337</longitude>
+                    <latitude>40.070805000141263</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.22986902855337,40.070805000141263,1575.631592                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>hoop</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T20:50:42Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.22953098639846</longitude>
+                    <latitude>40.070829978212714</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.22953098639846,40.070829978212714,1586.4233400000001                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>ramp</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T20:00:56Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.22919897921383</longitude>
+                    <latitude>40.071081016212702</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.22919897921383,40.071081016212702,1576.500366                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>starting line</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T19:39:39Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.22978898137808</longitude>
+                    <latitude>40.071374969556928</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.22978898137808,40.071374969556928,1583.702759                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>wicket 1</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T18:40:27Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.2314389590174</longitude>
+                    <latitude>40.072467969730496</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.2314389590174,40.072467969730496,1581.559448                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                                                                        
+            
+            <Placemark>
+                <name>wicket 2</name>                      
+                <visibility>1</visibility>            
+                <open>0</open>                        
+                                                    
+                <TimeStamp>
+                    <when>2013-03-07T18:40:38Z</when>
+                </TimeStamp> 
+                                
+                <description>
+                    No info available                </description>       
+                <LookAt>
+                    <longitude>-105.23146100342274</longitude>
+                    <latitude>40.072600990533829</latitude>
+                    <range>500</range>
+                    <tilt>45</tilt>
+                    <heading>0</heading>
+                </LookAt>
+                <Point>
+                    <coordinates>
+                        -105.23146100342274,40.072600990533829,1570.326294                        
+                    </coordinates>
+                </Point>
+            </Placemark>
+                            
+        </Folder>
+        
+                
+                
+        <LookAt>
+            <longitude>-105.23032600991</longitude>            
+            <latitude>40.071678478271</latitude>             
+            <altitude>0</altitude>               
+            <heading>0</heading>               
+            <tilt>45</tilt>
+            <range>175</range>                    
+            <altitudeMode>clampToGround</altitudeMode> 
+        </LookAt>
+    </Document>
+</kml>

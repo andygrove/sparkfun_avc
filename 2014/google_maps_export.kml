@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Untitled layer</name>
+		<Placemark>
+			<styleUrl>#icon-503-DB4436</styleUrl>
+			<name>Point 1</name>
+			<Point>
+				<coordinates>-105.23010313510895,40.07124397569352,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<styleUrl>#icon-503-DB4436</styleUrl>
+			<name>Point 2</name>
+			<Point>
+				<coordinates>-105.22996366024017,40.070960723768074,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<styleUrl>#icon-503-DB4436</styleUrl>
+			<name>Point 3</name>
+			<Point>
+				<coordinates>-105.22973835468292,40.070692864885324,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<styleUrl>#icon-503-DB4436</styleUrl>
+			<name>Point 4</name>
+			<Point>
+				<coordinates>-105.22939637303352,40.070768809656386,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<styleUrl>#icon-503-DB4436</styleUrl>
+			<name>Point 5</name>
+			<Point>
+				<coordinates>-105.2291040122509,40.07090325221914,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<styleUrl>#icon-503-DB4436</styleUrl>
+			<name>Point 6</name>
+			<Point>
+				<coordinates>-105.22929847240448,40.07112800675052,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<styleUrl>#icon-503-DB4436</styleUrl>
+			<name>Point 7</name>
+			<Point>
+				<coordinates>-105.22947818040848,40.07140304781628,0.0</coordinates>
+			</Point>
+		</Placemark>
+		<Style id='icon-503-DB4436'>
+			<IconStyle>
+				<color>ff3644DB</color>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+				</Icon>
+			</IconStyle>
+		</Style>
+	</Document>
+</kml>
