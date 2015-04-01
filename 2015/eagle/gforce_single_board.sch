@@ -5689,7 +5689,7 @@ Standard 7805 5V regulator. IGO (Input Ground Output). Spark Fun Electronics SKU
 <part name="R6" library="SparkFun-Resistors" deviceset="RESISTOR" device="PTH-1/4W" value="2.2K"/>
 <part name="JP2" library="SparkFun-Connectors" deviceset="M03" device="PTH" value="MOTORS"/>
 <part name="GO_SWITCH" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
-<part name="SPI" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
+<part name="SPI_2" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
 <part name="SPI1" library="SparkFun-Connectors" deviceset="M04" device="PTH"/>
 <part name="SUPPLY10" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND10" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
@@ -5747,7 +5747,7 @@ Standard 7805 5V regulator. IGO (Input Ground Output). Spark Fun Electronics SKU
 <instance part="R6" gate="G$1" x="193.04" y="96.52"/>
 <instance part="JP2" gate="G$1" x="132.08" y="-12.7" rot="R180"/>
 <instance part="GO_SWITCH" gate="G$1" x="147.32" y="-35.56" rot="R180"/>
-<instance part="SPI" gate="G$1" x="83.82" y="-35.56"/>
+<instance part="SPI_2" gate="G$1" x="83.82" y="-35.56"/>
 <instance part="SPI1" gate="G$1" x="109.22" y="-35.56" rot="MR0"/>
 <instance part="SUPPLY10" gate="G$1" x="137.16" y="-33.02"/>
 <instance part="GND10" gate="1" x="119.38" y="-45.72"/>
@@ -6201,7 +6201,7 @@ Standard 7805 5V regulator. IGO (Input Ground Output). Spark Fun Electronics SKU
 <pinref part="U1" gate="G$1" pin="PB5(SCK)"/>
 <wire x1="91.44" y1="-12.7" x2="91.44" y2="-38.1" width="0.1524" layer="91"/>
 <junction x="91.44" y="-38.1"/>
-<pinref part="SPI" gate="G$1" pin="1"/>
+<pinref part="SPI_2" gate="G$1" pin="1"/>
 <wire x1="91.44" y1="-38.1" x2="88.9" y2="-38.1" width="0.1524" layer="91"/>
 <pinref part="SPI1" gate="G$1" pin="1"/>
 <wire x1="91.44" y1="-38.1" x2="104.14" y2="-38.1" width="0.1524" layer="91"/>
@@ -6213,7 +6213,7 @@ Standard 7805 5V regulator. IGO (Input Ground Output). Spark Fun Electronics SKU
 <wire x1="91.44" y1="-10.16" x2="93.98" y2="-10.16" width="0.1524" layer="91"/>
 <wire x1="93.98" y1="-10.16" x2="93.98" y2="-35.56" width="0.1524" layer="91"/>
 <junction x="93.98" y="-35.56"/>
-<pinref part="SPI" gate="G$1" pin="2"/>
+<pinref part="SPI_2" gate="G$1" pin="2"/>
 <wire x1="88.9" y1="-35.56" x2="93.98" y2="-35.56" width="0.1524" layer="91"/>
 <pinref part="SPI1" gate="G$1" pin="2"/>
 <wire x1="104.14" y1="-35.56" x2="93.98" y2="-35.56" width="0.1524" layer="91"/>
@@ -6225,7 +6225,7 @@ Standard 7805 5V regulator. IGO (Input Ground Output). Spark Fun Electronics SKU
 <wire x1="91.44" y1="-7.62" x2="96.52" y2="-7.62" width="0.1524" layer="91"/>
 <wire x1="96.52" y1="-7.62" x2="96.52" y2="-33.02" width="0.1524" layer="91"/>
 <junction x="96.52" y="-33.02"/>
-<pinref part="SPI" gate="G$1" pin="3"/>
+<pinref part="SPI_2" gate="G$1" pin="3"/>
 <wire x1="88.9" y1="-33.02" x2="96.52" y2="-33.02" width="0.1524" layer="91"/>
 <pinref part="SPI1" gate="G$1" pin="3"/>
 <wire x1="104.14" y1="-33.02" x2="96.52" y2="-33.02" width="0.1524" layer="91"/>
@@ -6236,7 +6236,7 @@ Standard 7805 5V regulator. IGO (Input Ground Output). Spark Fun Electronics SKU
 <pinref part="U1" gate="G$1" pin="PB2(SS/OC1B)"/>
 <wire x1="91.44" y1="-5.08" x2="99.06" y2="-5.08" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="-5.08" x2="99.06" y2="-30.48" width="0.1524" layer="91"/>
-<pinref part="SPI" gate="G$1" pin="4"/>
+<pinref part="SPI_2" gate="G$1" pin="4"/>
 <wire x1="99.06" y1="-30.48" x2="88.9" y2="-30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
