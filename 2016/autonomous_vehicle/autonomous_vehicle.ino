@@ -1,3 +1,4 @@
+
 /**
  * Arduino code for an autonomous vehicle.
  *
@@ -14,14 +15,15 @@
 #include <SPI.h>
 #include <SD.h>
 #include <PololuQik.h>
-#include <NewPing.h>
+#include <octasonic.h>
 #include "location.h"
 
 // choose a map to navigate
-#include "map_sparkfun.h"
-//#include "map_home.h"
+//#include "map_sparkfun.h"
+#include "map_basketball_court.h"
 
-char filename[] = "SFUN0010.LOG";
+// output filename
+char filename[] = "TEST0001.LOG";
 
 // ratio of left/right motor to provide enough torque to turn
 int differential_drive_coefficient = 5;
@@ -60,57 +62,16 @@ int right_speed = 0;
 
 int nav_count = 0;
 
-
-#if defined(__AVR_ATmega168__) ||defined(__AVR_ATmega168P__) ||defined(__AVR_ATmega328P__)
-/**************************************************************************
- *
- * Arduino Uno (not working)
- *
- *************************************************************************/
-
-// use hardware serial for GPS but this means we cannot use the serial monitor
-// and have to rely on the SD logging for deubgging the code
-Adafruit_GPS GPS(&Serial);
-
-// QIK uses software serial
-PololuQik2s12v10 qik(2,3,4);
-
-// HC-SR04 connected to analog pins
-NewPing sonar[5] = {
-  NewPing(7, 7, MAX_DISTANCE), // left
-  NewPing(A3, A3, MAX_DISTANCE), // front-left
-  NewPing(A2, A2, MAX_DISTANCE), // front-center
-  NewPing(A1, A1, MAX_DISTANCE),   // front-right
-  NewPing(A0, A0, MAX_DISTANCE)    // right
-};
-
-// compass connects to A4/A5
-
-#elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-/**************************************************************************
- *
- * Arduino MEGA 2560
- *
- *************************************************************************/
-
 // Software serial
-PololuQik2s12v10 qik(50, 51, 52);
+PololuQik2s12v10 qik(63, 64, 62);
 
 // Use hardware interupts on Mega (pins 18,19)
 Adafruit_GPS GPS(&Serial1);
 
-// HC-SR04 connected to analog pins
-NewPing sonar[5] = {
-  NewPing(A12, A12, MAX_DISTANCE), // left
-  NewPing(A11, A11, MAX_DISTANCE), // front-left
-  NewPing(A10, A10, MAX_DISTANCE), // front-center
-  NewPing(A9, A9, MAX_DISTANCE),   // front-right
-  NewPing(A8, A8, MAX_DISTANCE)    // right
-};
+// octasonic
+Octasonic octasonic(5, 53); // 5 sensors on chip select 53
 
 // compass connects to 20/21 (SDA/SCL)
-
-#endif
 
 /**************************************************************************
  *
@@ -321,35 +282,10 @@ void set_motor_speeds(int left, int right) {
 #endif
 }
 
-
-/**
- * Get sonar distance in cm. Note that this function does not contain a delay so be sure to delay(33) between calls to avoid false readings.
- */
-int ping_sonar(int index) {
-  unsigned int uS = sonar[index].ping();
-  if (uS==0) {
-    return MAX_DISTANCE;
-  }
-  sonar_value[index] = uS / US_ROUNDTRIP_CM;
-  return sonar_value[index];
-}
-
 void measure_sonar() {
-  // sonar
-  sonar_value[0] = 100;
-  sonar_value[4] = 100;
-  for (int i=1; i<4; i++) {
-    sonar_value[i] = ping_sonar(i);
-    delay(33);
+  for (int i=0; i<5; i++) {
+    sonar_value[i] = octasonic.get(i);
   }
-
-/*
-    for (int i=0; i<5; i++) {
-      Serial.print(F(","));
-      Serial.print(sonar_value[i]);
-    }
-    Serial.println();
-  */
 
   // record sensor data
   if (logger) {
@@ -498,6 +434,7 @@ void setup() {
 
   Serial.begin(115200);
   Serial.println(F("Autonomous Vehicle 2.0"));
+  
 
   // start button
   pinMode(30, INPUT);
@@ -544,11 +481,11 @@ void test_compass_loop() {
 }
 
 void test_motors_loop() {
-  set_motor_speeds(0,100);
+  set_motor_speeds(100,100);
   delay(500);
   set_motor_speeds(0,0);
   delay(500);
-  set_motor_speeds(0,-100);
+  set_motor_speeds(-100,-100);
   delay(500);
   set_motor_speeds(0,0);
   delay(1000);
@@ -761,8 +698,8 @@ void real_loop() {
 }
 
 void loop() {
-  real_loop();
-  //test_start_button_loop();
+  //real_loop();
+  test_start_button_loop();
   //test_gps_loop();
   //test_compass_loop();
   //test_sonar_loop();
