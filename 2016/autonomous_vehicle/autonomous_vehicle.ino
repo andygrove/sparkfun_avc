@@ -22,45 +22,48 @@
 //#include "map_sparkfun.h"
 #include "map_basketball_court.h"
 
-// output filename
-char filename[] = "TEST0001.LOG";
-
-// ratio of left/right motor to provide enough torque to turn
-int differential_drive_coefficient = 5;
-
-int required_bearing;
-
-
-// m0 = right
-// m1 = left
+/**************************************************************************
+ *
+ * Configuration parameters.
+ *
+ *************************************************************************/
 
 #define ENABLE_MOTORS
-#define MAX_SPEED 100
-
-// emergency stop
+#define MAX_SPEED 100 // can be up to 255
 #define EMERGENCY_STOP_DISTANCE_CM 0 // hit the brakes if any front sensor measures below this value
-
-// obstacle avoidance settings
-#define MAX_DISTANCE           100 // max distance to measure
 #define MIN_FRONT_DISTANCE     75
 #define MIN_SIDE_DISTANCE      20
+#define differential_drive_coefficient 5 // ratio of left/right motor to provide enough torque to turn
 #define brake_amount_on_turn   100 // 0 to 127
 #define brake_delay_on_turn    100 // how long to brake in ms
 #define TURN_SPEED             100 // motor speed when performing a sharp turn to avoid an obstacle
 #define COAST_AFTER_AVOID      50 // how long to keep going after avoiding an obstacle and before resuming navigation
-
-// navigation settings
 #define ACCURACY               0.000025 //0.00004 used in testing and works well.
-#define NAVIGATE_EVERY_N_LOOPS 1
 
-// global variables
+/**************************************************************************
+ *
+ * Global variables
+ *
+ *************************************************************************/
+
+char filename[] = "TEST0001.LOG"; // output filename
+int required_bearing;
+File logger;
+Location currentLocation(0,0);
+Location targetLocation(0,0);
+unsigned short nextWaypointIndex = 0;
+unsigned short waypointCount = sizeof(WAYPOINT) / sizeof(Location);
+boolean gpsFix = true;
+unsigned int sonar_value[5];
 boolean started = false;
-
-// normal speeds needed for navigation purposes
 int left_speed = 0;
 int right_speed = 0;
-
 int nav_count = 0;
+int flush_count = 0;
+int prev_lat = 0;
+int prev_long = 0;
+boolean gps_changed = false;
+int gps_counter = 0;
 
 // Software serial
 PololuQik2s12v10 qik(63, 64, 62);
@@ -73,21 +76,6 @@ Octasonic octasonic(5, 53); // 5 sensors on chip select 53
 
 // compass connects to 20/21 (SDA/SCL)
 
-/**************************************************************************
- *
- * Global variables
- *
- *************************************************************************/
-
-File logger;
-Location currentLocation(0,0);
-Location targetLocation(0,0);
-unsigned short nextWaypointIndex = 0;
-unsigned short waypointCount = sizeof(WAYPOINT) / sizeof(Location);
-
-boolean gpsFix = true;
-
-unsigned int sonar_value[5];
 
 /** init_gps() */
 void init_gps() {
@@ -174,38 +162,15 @@ float calculate_compass_bearing(double x, double y) {
   if (x>0) {
     if (y>0) {
       // 0 through 90
-      if (ax>ay) {
-        return 90 - radian * atan(ay/ax);
-      }
-      else {
-        return radian * atan(ax/ay);
-      }
+      if (ax>ay) { return 90 - radian * atan(ay/ax); } else { return radian * atan(ax/ay); }
+    } else {
+      if (ax>ay) { return 90 + radian * atan(ay/ax); } else { return 180 - radian * atan(ax/ay); }
     }
-    else {
-      if (ax>ay) {
-        return 90 + radian * atan(ay/ax);
-      }
-      else {
-        return 180 - radian * atan(ax/ay);
-      }
-    }
-  }
-  else {
+  } else {
     if (y>0) {
-      if (ax>ay) {
-        return 270 + radian * atan(ay/ax);
-      }
-      else {
-        return 360 - radian * atan(ax/ay);
-      }
-    }
-    else {
-      if (ax>ay) {
-        return 270 - radian * atan(ay/ax);
-      }
-      else {
-        return 180 + radian * atan(ax/ay);
-      }
+      if (ax>ay) { return 270 + radian * atan(ay/ax); } else { return 360 - radian * atan(ax/ay); }
+    } else {
+      if (ax>ay) { return 270 - radian * atan(ay/ax); } else { return 180 + radian * atan(ax/ay); }
     }
   }
 }
@@ -216,9 +181,6 @@ float convert_to_decimal_degrees(float f) {
   return d + (f/60.0);
 }
 
-
-
-
 /** calc difference between two DMS (degrees, minutes, seconds) numbers ... not needed if we use decimal degrees everywhere */
 double calculate_difference(double l1, double l2) {
 
@@ -226,10 +188,7 @@ double calculate_difference(double l1, double l2) {
   int d2 = l2 / 100;
   double m1 = l1 - (d1 * 100);
   double m2 = l2 - (d2 * 100);
-  double ret = ((d1*60.0f)+m1) - ((d2*60.0f)+m2);
-
-  return ret;
-
+  return ((d1*60.0f)+m1) - ((d2*60.0f)+m2);
 }
 
 void get_next_waypoint() {
@@ -454,18 +413,12 @@ void setup() {
     logger.println("ROUTE_END");
   }
 
-
   get_next_waypoint();
-
-  // start switch
-  //pinMode(40, INPUT);
-
 }
 
 boolean is_start_button_pressed() {
   return digitalRead(30);
 }
-
 
 // Interrupt is called once a millisecond, looks for any new GPS data, and stores it
 SIGNAL(TIMER0_COMPA_vect) {
@@ -549,19 +502,8 @@ void test_start_button_loop() {
   delay(500);
 }
 
-int flush_count = 0;
-int prev_lat = 0;
-int prev_long = 0;
-boolean gps_changed = false;
-
-
-int gps_counter = 0;
 
 void real_loop() {
-
-//  Serial.println(F("loop()"));
-
-//delay(1000);
 
   // check for new GPS info
   if (GPS.newNMEAreceived()) {
@@ -670,30 +612,10 @@ void real_loop() {
     avoid_obstacle(sonar_value[0] > sonar_value[4]);
   }
 
-  // only do nav every N times through the loop because it is expensive to compute
-   // Serial.println("F");
-
-//  if (++nav_count == NAVIGATE_EVERY_N_LOOPS) {
-
   if (gps_changed) {
     do_navigation();
     set_motor_speeds(left_speed, right_speed);
   }
-
-  //  nav_count = 0;
- // }
-
-  // var speed according to proximity to obstacles
-//  int closest = min(sonar_value[1], min(sonar_value[2], sonar_value[3]));
-//  float speed_coefficient = max(0.5, closest / (1.0f * MAX_DISTANCE));
-  /*
-  if (logger) {
-    logger.print("SPEED_COEFFICIENT,");
-
-    logger.println(speed_coefficient);
-  }
-  */
-
 
 }
 
