@@ -20,7 +20,7 @@
 
 // choose a map to navigate
 //#include "map_sparkfun.h"
-#include "map_basketball_court.h"
+#include "map_office_evolution.h"
 
 /**************************************************************************
  *
@@ -29,10 +29,9 @@
  *************************************************************************/
 
 #define ENABLE_MOTORS
-#define MAX_SPEED 100 // can be up to 255
-#define EMERGENCY_STOP_DISTANCE_CM 0 // hit the brakes if any front sensor measures below this value
-#define MIN_FRONT_DISTANCE     75
-#define MIN_SIDE_DISTANCE      20
+#define MAX_SPEED 200 // can be up to 255
+#define MIN_FRONT_DISTANCE     40
+#define MIN_SIDE_DISTANCE      30
 #define differential_drive_coefficient 5 // ratio of left/right motor to provide enough torque to turn
 #define brake_amount_on_turn   100 // 0 to 127
 #define brake_delay_on_turn    100 // how long to brake in ms
@@ -46,7 +45,7 @@
  *
  *************************************************************************/
 
-char filename[] = "TEST0001.LOG"; // output filename
+char filename[] = "MDAY0001.LOG"; // output filename
 int required_bearing;
 File logger;
 Location currentLocation(0,0);
@@ -594,7 +593,7 @@ void real_loop() {
     return;
   }
 
-//  measure_sonar();
+  measure_sonar();
 
   // obstacle avoidance for front sensors
   if (sonar_value[1] < MIN_FRONT_DISTANCE
@@ -620,8 +619,8 @@ void real_loop() {
 }
 
 void loop() {
-  //real_loop();
-  test_start_button_loop();
+  real_loop();
+  //test_start_button_loop();
   //test_gps_loop();
   //test_compass_loop();
   //test_sonar_loop();
