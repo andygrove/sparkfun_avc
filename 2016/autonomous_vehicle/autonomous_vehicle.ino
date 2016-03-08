@@ -17,6 +17,10 @@
 #include <PololuQik.h>
 #include <octasonic.h>
 #include "location.h"
+#include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+  #include <avr/power.h>
+#endif
 
 // choose a map to navigate
 //#include "map_sparkfun.h"
@@ -38,6 +42,14 @@
 #define TURN_SPEED             100 // motor speed when performing a sharp turn to avoid an obstacle
 #define COAST_AFTER_AVOID      50 // how long to keep going after avoiding an obstacle and before resuming navigation
 #define ACCURACY               0.000025 //0.00004 used in testing and works well.
+#define NEOPIXEL_PIN   6
+#define NUMPIXELS      8
+#define LED_BRIGHTNESS 10 // 0 to 255
+
+// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
+// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
+// example for more information on possible values.
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 /**************************************************************************
  *
@@ -59,10 +71,12 @@ int left_speed = 0;
 int right_speed = 0;
 int nav_count = 0;
 int flush_count = 0;
-int prev_lat = 0;
-int prev_long = 0;
+float prev_lat = 0;
+float prev_long = 0;
 boolean gps_changed = false;
 int gps_counter = 0;
+boolean waiting_led;
+boolean toggle_nav_led;
 
 // Software serial
 PololuQik2s12v10 qik(63, 64, 62);
@@ -243,7 +257,18 @@ void set_motor_speeds(int left, int right) {
 void measure_sonar() {
   for (int i=0; i<5; i++) {
     sonar_value[i] = octasonic.get(i);
+    Serial.print(sonar_value[i]);
+    Serial.print(" ");
+    if (sonar_value[i] < 20) {
+      pixels.setPixelColor(i, pixels.Color(LED_BRIGHTNESS,0,0));
+    } else if (sonar_value[i] < 50) {
+      pixels.setPixelColor(i, pixels.Color(LED_BRIGHTNESS,LED_BRIGHTNESS,0));
+    } else {
+      pixels.setPixelColor(i, pixels.Color(0,LED_BRIGHTNESS,0));
+    }
   }
+  Serial.println();
+  pixels.show();
 
   // record sensor data
   if (logger) {
@@ -257,6 +282,17 @@ void measure_sonar() {
 }
 
 void avoid_obstacle(boolean turn_left) {
+  
+  if (turn_left) {
+    // turning left because obstacle is on right
+    pixels.setPixelColor(5, pixels.Color(0,0,0));
+    pixels.setPixelColor(6, pixels.Color(0,LED_BRIGHTNESS,0));
+  } else {
+    // turning right because obstacle is on left
+    pixels.setPixelColor(5, pixels.Color(0,LED_BRIGHTNESS,0));
+    pixels.setPixelColor(6, pixels.Color(0,0,0));
+  }
+  pixels.show();
 
   if (logger) {
     logger.print(F("AVOID_OBSTACLE,"));
@@ -309,6 +345,10 @@ void avoid_obstacle(boolean turn_left) {
   // coast briefly
   set_motor_speeds(0,0);
   delay(COAST_AFTER_AVOID);
+
+  pixels.setPixelColor(5, pixels.Color(0,0,0));
+  pixels.setPixelColor(6, pixels.Color(0,0,0));
+  pixels.show();
 }
 
 /** Calculate motor speed based on angle of turn. */
@@ -333,18 +373,13 @@ void do_navigation() {
 
     // get compass heading
     HMC6352.Wake();
-    // get average of two readings
-    float b1  = HMC6352.GetHeading();
-    delay(10);
-    float b2  = HMC6352.GetHeading();
-    float current_bearing = (b1+b2)/2.0f;
+    float current_bearing = HMC6352.GetHeading();
     HMC6352.Sleep();
 
-    // now that we have a gps location, calculate how to get to the destination
     double diffLon = calculate_difference(targetLocation.longitude, currentLocation.longitude);
     double diffLat = calculate_difference(targetLocation.latitude, currentLocation.latitude);
 
-  float required_bearing = calculate_compass_bearing(diffLon, diffLat);
+    float required_bearing = calculate_compass_bearing(diffLon, diffLat);
 
     float angle_diff = calc_bearing_diff(current_bearing, required_bearing);
     float angle_diff_abs = fabs(angle_diff);
@@ -371,6 +406,12 @@ void do_navigation() {
         logger.println(F("REACHED_WAYPOINT"));
         Serial.println("REACHED WAYPOINT");
       }
+
+      // brief fash of magenta to indicate new waypoint
+      pixels.setPixelColor(7, pixels.Color(LED_BRIGHTNESS,0,LED_BRIGHTNESS));
+      pixels.show();
+      delay(50);
+
       get_next_waypoint();
       return;
     }
@@ -390,12 +431,19 @@ void do_navigation() {
 
 void setup() {
 
-  Serial.begin(115200);
-  Serial.println(F("Autonomous Vehicle 2.0"));
-  
+  pixels.begin();
+  for (int i=0; i<8; i++) {
+    pixels.setPixelColor(i, pixels.Color(LED_BRIGHTNESS,0,0));
+    pixels.show();
+    delay(100);
+  }
 
+  Serial.begin(115200);
+  Serial.println(F("G-Force Autonomous Vehicle"));
+  
   // start button
   pinMode(30, INPUT);
+
 
   init_sd();
   init_compass();
@@ -413,6 +461,20 @@ void setup() {
   }
 
   get_next_waypoint();
+
+  // show green LEDs to indicate success
+  for (int i=0; i<8; i++) {
+    pixels.setPixelColor(i, pixels.Color(0,LED_BRIGHTNESS,0));
+    pixels.show();
+    delay(100);
+  }
+  
+  // turn LEDs off
+  for (int i=0; i<8; i++) {
+    pixels.setPixelColor(i, pixels.Color(0,0,0));
+  }
+  pixels.show();
+
 }
 
 boolean is_start_button_pressed() {
@@ -445,14 +507,7 @@ void test_motors_loop() {
 
 void test_sonar_loop() {
     measure_sonar();
-
-    for (int i=0; i<5; i++) {
-      Serial.print(sonar_value[i]);
-      Serial.print("  ");
-    }
-    Serial.println();
-
-    delay(1000);
+    delay(100);
 }
 
 // test GPS
@@ -501,19 +556,17 @@ void test_start_button_loop() {
   delay(500);
 }
 
-
 void real_loop() {
+
+  measure_sonar();
 
   // check for new GPS info
   if (GPS.newNMEAreceived()) {
     if (GPS.parse(GPS.lastNMEA())) {
       if (GPS.fix) {
-        if (!gpsFix) {
-          gpsFix = true;
-          if (logger) {
-            logger.println(F("GPS_FIX"));
-          }
-        }
+        
+        gpsFix = true;
+
         // update current location
         currentLocation.latitude = convert_to_decimal_degrees(GPS.latitude);
         // convert longitude to negative number for WEST
@@ -523,6 +576,25 @@ void real_loop() {
         if (prev_lat == 0 || fabs(currentLocation.latitude - prev_lat) > 0.000001
         || prev_long == 0 || fabs(currentLocation.longitude - prev_long) > 0.000001) {
           gps_changed = true;
+          toggle_nav_led = !toggle_nav_led;
+        }
+
+        // toggle between green and blue to show as new GPS co-ords are received
+        if (toggle_nav_led) {
+          pixels.setPixelColor(7, pixels.Color(0,LED_BRIGHTNESS,0));
+        } else {
+          pixels.setPixelColor(7, pixels.Color(0,0,LED_BRIGHTNESS));
+        }
+        pixels.show();
+
+        if (gps_changed) {  
+          
+          Serial.println(fabs(currentLocation.latitude - prev_lat));
+          Serial.println(fabs(currentLocation.longitude - prev_long));
+
+          Serial.print(GPS.latitudeDegrees, 6);
+          Serial.print(F(","));
+          Serial.println(GPS.longitudeDegrees, 6);
         }
 
         prev_lat = currentLocation.latitude;
@@ -552,35 +624,33 @@ void real_loop() {
           logger.println(GPS.seconds, DEC);
         }
 
+      } else {
+        
+        gpsFix = false;
+        pixels.setPixelColor(7, pixels.Color(LED_BRIGHTNESS,0,0));
+        pixels.show();
+        
+        if (logger) {
+          logger.print(F("NO_GPS"));
+        }
+        
+        // no GPS fix, so slow down or stop
+        if (started) {
+          set_motor_speeds(50,50);
+        } else {
+         set_motor_speeds(0, 0);
+        }
+        
       }
     }
   }
-
-//  Serial.println("A");
+  
    if (!started) {
      if (is_start_button_pressed()) {
        logger.println(F("START_BUTTON_ACTIVATED"));
        started = true;
      }
    }
-
- // Serial.println("B");
-  if (!GPS.fix) {
-    if (gpsFix) {
-      gpsFix = false;
-      Serial.println("NO_GPS");
-      if (logger) {
-        logger.println(F("GPS_NO_FIX"));
-      }
-      // coast
-      if (started) {
-        set_motor_speeds(50,50);
-      } else {
-       set_motor_speeds(0, 0);
-      }
-    }
-    return;
-  }
 
   if (++flush_count == 100) {
     logger.flush();
@@ -589,11 +659,18 @@ void real_loop() {
 
   if (!started) {
     Serial.println("WAITING");
+    waiting_led = !waiting_led;
+    if (waiting_led) {
+      pixels.setPixelColor(6, pixels.Color(0,0,LED_BRIGHTNESS));
+    } else {
+      pixels.setPixelColor(6, pixels.Color(0,0,0));
+    }      
+    pixels.show();
     delay(100);
     return;
   }
 
-  measure_sonar();
+  pixels.setPixelColor(6, pixels.Color(0,0,0));
 
   // obstacle avoidance for front sensors
   if (sonar_value[1] < MIN_FRONT_DISTANCE
